@@ -1,0 +1,39 @@
+{
+  "name": "shelf-cli",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./lib/index.js",
+  "bin": {
+    "shelf": "./lib/index.js"
+  },
+  "repository": "git@github.com:ardier16/shelf-cli.git",
+  "author": "ardier16 <ardier16@gmail.com>",
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "create": "yarn build && yarn test",
+    "build": "tsc -p .",
+    "lint": "eslint ./src"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "commander": "^8.2.0",
+    "figlet": "^1.5.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/clear": "^0.1.2",
+    "@types/figlet": "^1.5.4",
+    "@types/node": "^16.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  }
+}
