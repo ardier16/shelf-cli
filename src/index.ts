@@ -5,6 +5,7 @@ import clear from 'clear'
 import { program } from 'commander'
 import figlet from 'figlet'
 
+import { init } from './commands/init'
 import config from './config.json'
 
 clear()
@@ -19,7 +20,7 @@ program
 
 program
   .command('init', 'Initialize CLI')
-  .action(() => { return })
+  .action(init)
 
 program.parse(process.argv)
 
