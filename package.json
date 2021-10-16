@@ -10,7 +10,6 @@
   "author": "ardier16 <ardier16@gmail.com>",
   "scripts": {
     "start": "nodemon src/index.ts --ignore ./src/config.json",
-    "create": "yarn build && yarn test",
     "build": "tsc -p .",
     "lint": "eslint ./src"
   },

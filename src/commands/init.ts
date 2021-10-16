@@ -56,7 +56,7 @@ export async function init () {
 
   clear()
   saveConfig(config)
-  console.log(chalk.green('Config file updated successfully!'))
+  console.log(chalk.green('CLI config updated successfully!'))
 }
 
 async function promptConfig (config: InitConfig) : Promise<InitConfig> {

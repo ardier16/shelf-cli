@@ -10,20 +10,24 @@ import config from './config.json'
 
 clear()
 
-const figletBanner = figlet.textSync('Shelf CLI', { horizontalLayout: 'full' })
-console.log(chalk.red(figletBanner))
-
 program
   .version(config.version)
   .usage('<command> [options]')
   .description("Shelf.Network CLI")
 
 program
-  .command('init', 'Initialize CLI')
+  .command('init')
+  .description('Initialize CLI')
   .action(init)
 
 program.parse(process.argv)
 
 if (!process.argv.slice(2).length) {
+  const figletBanner = figlet.textSync('Shelf CLI', {
+    horizontalLayout: 'full',
+  })
+  console.log(chalk.red(figletBanner))
+
   program.outputHelp()
+  process.exit(0)
 }
