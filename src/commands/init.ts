@@ -20,19 +20,19 @@ const INIT_QUESTIONS = [
     type: 'input',
     name: 'gitlabToken',
     message: 'Gitlab access token',
-    suffix: ' (https://gitlab.com)',
+    suffix: '\nhttps://docs.gitlab.com/ee/user/profile/personal_access_tokens.html\n',
   },
   {
     type: 'input',
     name: 'slackToken',
     message: 'Slack access token',
-    suffix: ' (https://slack.com)',
+    suffix: '\nhttps://slack.com\n',
   },
   {
     type: 'input',
     name: 'jiraToken',
     message: 'Jira access token',
-    suffix: ' (https://shelf.atlassian.com)',
+    suffix: '\nhttps://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/\n',
   },
 ]
 
@@ -54,7 +54,6 @@ export async function init () {
     isOk = isDone
   }
 
-  clear()
   saveConfig(config)
   console.log(chalk.green('CLI config updated successfully!'))
 }

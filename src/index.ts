@@ -11,6 +11,7 @@ import config from './config.json'
 clear()
 
 program
+  .name('shelf')
   .version(config.version)
   .usage('<command> [options]')
   .description("Shelf.Network CLI")
