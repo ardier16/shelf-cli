@@ -2,11 +2,27 @@
 
 import chalk from 'chalk'
 import clear from 'clear'
+import { program } from 'commander'
 import figlet from 'figlet'
 
+import config from './config.json'
+
 clear()
-console.log(
-  chalk.yellow(
-    figlet.textSync('Shelf CLI', { horizontalLayout: 'full' })
-  )
-)
+
+const figletBanner = figlet.textSync('Shelf CLI', { horizontalLayout: 'full' })
+console.log(chalk.red(figletBanner))
+
+program
+  .version(config.version)
+  .usage('<command> [options]')
+  .description("Shelf.Network CLI")
+
+program
+  .command('init', 'Initialize CLI')
+  .action(() => { return })
+
+program.parse(process.argv)
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}

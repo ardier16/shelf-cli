@@ -32,5 +32,6 @@ module.exports = {
     'comma-dangle': [1, 'always-multiline'],
     'eol-last': [1, 'always'],
     'semi': ['error', 'never'],
+    'indent': ['error', 2],
   },
 }
