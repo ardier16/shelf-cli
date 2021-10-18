@@ -17,12 +17,13 @@ const INIT_QUESTIONS = [
     type: 'input',
     name: 'slackToken',
     message: 'Slack access token',
-    suffix: '\nhttps://slack.com\n',
+    suffix: '\nhttps://api.slack.com/authentication/basics\n',
   },
   {
     type: 'input',
     name: 'jiraEmail',
     message: 'Jira email',
+    suffix: '\n',
   },
   {
     type: 'input',
