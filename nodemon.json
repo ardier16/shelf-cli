@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    ".git",
+    "node_modules",
+    "src/**/config*.json"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

@@ -1,11 +1,10 @@
-import path from 'path'
-import fs from 'fs/promises'
+import { writeFile } from 'fs/promises'
 
 import chalk from 'chalk'
 import clear from 'clear'
 import inquirer, { QuestionCollection } from 'inquirer'
 
-import oldConfig from '../config.json'
+import { config as oldConfig, CONFIG_PATH } from '../config'
 
 type InitConfig = Record<string, string> & {
   gitlabToken?: string,
@@ -13,8 +12,6 @@ type InitConfig = Record<string, string> & {
   jiraEmail?: string,
   jiraToken?: string,
 }
-
-const CONFIG_PATH = path.resolve(__dirname, '../config.json')
 
 const INIT_QUESTIONS = [
   {
@@ -91,5 +88,5 @@ async function saveConfig (config: InitConfig) {
   }
 
   const output = JSON.stringify(newConfig, null, 2)
-  await fs.writeFile(CONFIG_PATH, output)
+  await writeFile(CONFIG_PATH, output)
 }

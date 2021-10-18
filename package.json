@@ -9,7 +9,7 @@
   "repository": "git@github.com:ardier16/shelf-cli.git",
   "author": "ardier16 <ardier16@gmail.com>",
   "scripts": {
-    "start": "nodemon src/index.ts --ignore ./src/config.json",
+    "start": "nodemon src/index.ts",
     "build": "tsc -p .",
     "lint": "eslint ./src"
   },
