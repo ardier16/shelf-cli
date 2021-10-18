@@ -4,6 +4,7 @@ import { gitSdk } from '../services/git-sdk'
 import { gitlabSdk } from '../services/gitlab-sdk'
 import { jiraSdk } from '../services/jira-sdk'
 
+import { getGitlabProject } from '../utils/gitlab'
 import { matchRegex } from '../utils/regex'
 
 const JIRA_ISSUE_REGEX = /https:\/\/shelf\.atlassian\.net\/browse\/(SHF-\d+)/
@@ -19,17 +20,7 @@ export async function pushMergeRequest(issueLink: string) {
   try {
     console.log(`Finding issue ${chalk.yellow(issueName)}`)
     const issue = await jiraSdk.issues.getIssue({ issueIdOrKey: issueName })
-
-    const remoteUrl = await gitSdk.getRemoteUrl()
-    const projectName = matchRegex(remoteUrl, /\/([A-z-_]+)\.git/)
-
-    console.log(`Finding Gitlab project ${chalk.yellow(projectName)}`)
-    const projects = await gitlabSdk.Projects.search(projectName)
-    const project = projects.find(item => item.ssh_url_to_repo === remoteUrl)
-    if (project === undefined) {
-      console.log(`${chalk.red('Project not found:')} ${chalk.cyan(projectName)}`)
-      process.exit(0)
-    }
+    const project = await getGitlabProject()
 
     console.log(`Creating branch ${chalk.yellow(issueName)}`)
     await gitSdk.checkout('master')

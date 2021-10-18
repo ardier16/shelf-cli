@@ -7,6 +7,7 @@ import figlet from 'figlet'
 import { init } from './commands/init'
 import { logWork } from './commands/log-work'
 import { pushMergeRequest } from './commands/push-mr'
+import { sendMRToSlack } from './commands/slack-mr'
 
 program
   .name('shelf')
@@ -29,6 +30,11 @@ program
   .command('log-work [timeSpent]')
   .description('Log work time for current issue')
   .action(logWork)
+
+program
+  .command('slack-mr [channel]')
+  .description('Send merge request message to Slack')
+  .action(sendMRToSlack)
 
 if (!process.argv.slice(2).length) {
   const figletBanner = figlet.textSync('Shelf CLI', {
