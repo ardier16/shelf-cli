@@ -9,6 +9,10 @@ export class GitSdk {
     return this._execCommand(`git checkout -b ${branch}`)
   }
 
+  getCurrentBranch (): Promise<string> {
+    return this._execCommand('git branch --show-current')
+  }
+
   pushOrigin (branch: string): Promise<string> {
     return this._execCommand(`git push --set-upstream origin ${branch}`)
   }

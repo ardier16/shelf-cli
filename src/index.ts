@@ -5,6 +5,7 @@ import { program } from 'commander'
 import figlet from 'figlet'
 
 import { init } from './commands/init'
+import { logWork } from './commands/log-work'
 import { pushMergeRequest } from './commands/push-mr'
 
 program
@@ -23,6 +24,11 @@ program
   .command('push-mr [issueLink]')
   .description('Create new branch and related merge request')
   .action(pushMergeRequest)
+
+program
+  .command('log-work [timeSpent]')
+  .description('Log work time for current issue')
+  .action(logWork)
 
 if (!process.argv.slice(2).length) {
   const figletBanner = figlet.textSync('Shelf CLI', {
