@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 
 import chalk from 'chalk'
-import clear from 'clear'
 import { program } from 'commander'
 import figlet from 'figlet'
 
 import { init } from './commands/init'
 import { pushMergeRequest } from './commands/push-mr'
-
-clear()
 
 program
   .name('shelf')
@@ -27,8 +24,6 @@ program
   .description('Create new branch and related merge request')
   .action(pushMergeRequest)
 
-program.parse(process.argv)
-
 if (!process.argv.slice(2).length) {
   const figletBanner = figlet.textSync('Shelf CLI', {
     horizontalLayout: 'full',
@@ -38,3 +33,5 @@ if (!process.argv.slice(2).length) {
   program.outputHelp()
   process.exit(0)
 }
+
+program.parse(process.argv)
