@@ -4,14 +4,7 @@ import chalk from 'chalk'
 import clear from 'clear'
 import inquirer, { QuestionCollection } from 'inquirer'
 
-import { config as oldConfig, CONFIG_PATH } from '../config'
-
-type InitConfig = Record<string, string> & {
-  gitlabToken?: string,
-  slackToken?: string,
-  jiraEmail?: string,
-  jiraToken?: string,
-}
+import { config as oldConfig, CONFIG_PATH, ShelfConfig } from '../config'
 
 const INIT_QUESTIONS = [
   {
@@ -41,34 +34,35 @@ const INIT_QUESTIONS = [
 
 export async function init () {
   let isOk = false
-  let config : InitConfig = oldConfig
+  let config : ShelfConfig
 
-  while (!isOk) {
+  do {
     clear()
-    config = await promptConfig(config)
+    config = await promptConfig()
     console.log(JSON.stringify(config, null, 2))
 
     const { isDone } = await inquirer.prompt({
       name: 'isDone',
       type: 'confirm',
       default: true,
-      message: 'Create config file?',
+      message: 'Update config file?',
     })
     isOk = isDone
-  }
+  } while (!isOk)
 
   saveConfig(config)
+  clear()
   console.log(chalk.green('CLI config updated successfully!'))
 }
 
-async function promptConfig (config: InitConfig) : Promise<InitConfig> {
-  const result = Object.assign({}, config)
+async function promptConfig () : Promise<ShelfConfig> {
+  const result = Object.assign({}, oldConfig)
 
   for (const item of INIT_QUESTIONS) {
     console.log(chalk.cyan('Shelf CLI initalization'))
     const answers = await inquirer.prompt({
       ...item,
-      default: config[item.name],
+      default: result[item.name],
     } as QuestionCollection)
 
     if (answers[item.name] !== '') {
@@ -81,7 +75,7 @@ async function promptConfig (config: InitConfig) : Promise<InitConfig> {
   return result
 }
 
-async function saveConfig (config: InitConfig) {
+async function saveConfig (config: ShelfConfig) {
   const newConfig = {
     ...oldConfig,
     ...config,
