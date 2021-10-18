@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { gitSdk } from '../services/git-sdk'
 import { gitlabSdk } from '../services/gitlab-sdk'
 import { jiraSdk } from '../services/jira-sdk'
+import { matchRegex } from '../utils/regex'
 
 const JIRA_TASK_REGEX = /https:\/\/shelf\.atlassian\.net\/browse\/(SHF-\d+)/
 
@@ -12,9 +13,9 @@ export async function pushMergeRequest(taskLink: string) {
     process.exit(0)
   }
 
-  const taskName = (taskLink.match(JIRA_TASK_REGEX) || [])[1]
+  const taskName = matchRegex(taskLink, JIRA_TASK_REGEX)
   console.log(`Creating merge request for ${chalk.bold.blue(taskName)}`)
-  
+
   try {
     // const issue = await jiraSdk.issues.getIssue({ issueIdOrKey: taskName })
 
@@ -24,9 +25,11 @@ export async function pushMergeRequest(taskLink: string) {
 
     // const remoteUrl = await gitSdk.getRemoteUrl()
     const remoteUrl = 'git@gitlab.com:eAuction/copart-bidder-extension.git'
-    const projectName = remoteUrl.trim().match(/\/(.+)\.git/)[1]
+    const projectName = matchRegex(remoteUrl.trim(), /\/(.+)\.git/)
+
     const projects = await gitlabSdk.Projects.search(projectName)
-    console.log(projects.map(p => p.ssh_url_to_repo))
+    const project = projects.find(itemm => itemm.ssh_url_to_repo === remoteUrl)
+    console.log(project)
 
     // await gitlabSdk.MergeRequests.create(
     //   '',

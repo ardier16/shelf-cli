@@ -8,14 +8,12 @@ import figlet from 'figlet'
 import { init } from './commands/init'
 import { pushMergeRequest } from './commands/push-mr'
 
-// ts-ignore
-import packageJson from '../package.json'
-
 clear()
 
 program
   .name('shelf')
-  .version(packageJson.version)
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  .version(require('../package.json').version)
   .usage('<command> [options]')
   .description("Shelf.Network CLI")
 

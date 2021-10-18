@@ -3,11 +3,11 @@ import fs from 'fs/promises'
 
 import chalk from 'chalk'
 import clear from 'clear'
-import inquirer from 'inquirer'
+import inquirer, { QuestionCollection } from 'inquirer'
 
 import oldConfig from '../config.json'
 
-type InitConfig = {
+type InitConfig = Record<string, string> & {
   gitlabToken?: string,
   slackToken?: string,
   jiraEmail?: string,
@@ -42,7 +42,7 @@ const INIT_QUESTIONS = [
   },
 ]
 
-export async function init () {  
+export async function init () {
   let isOk = false
   let config : InitConfig = {}
 
@@ -72,7 +72,7 @@ async function promptConfig (config: InitConfig) : Promise<InitConfig> {
     const answers = await inquirer.prompt({
       ...item,
       default: config[item.name],
-    })
+    } as QuestionCollection)
     Object.assign(result, answers)
     clear()
   }

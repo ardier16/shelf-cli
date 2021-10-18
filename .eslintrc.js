@@ -31,7 +31,10 @@ module.exports = {
     }],
     'comma-dangle': [1, 'always-multiline'],
     'eol-last': [1, 'always'],
-    'semi': ['error', 'never'],
-    'indent': ['error', 2],
+    'semi': [1, 'never'],
+    'indent': [1, 2],
+    'no-multi-spaces': 1,
+    'no-trailing-spaces': 1,
+    'space-in-parens': 1,
   },
 }
