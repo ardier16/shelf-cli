@@ -6,13 +6,16 @@ import { program } from 'commander'
 import figlet from 'figlet'
 
 import { init } from './commands/init'
-import config from './config.json'
+import { pushMergeRequest } from './commands/push-mr'
+
+// ts-ignore
+import packageJson from '../package.json'
 
 clear()
 
 program
   .name('shelf')
-  .version(config.version)
+  .version(packageJson.version)
   .usage('<command> [options]')
   .description("Shelf.Network CLI")
 
@@ -20,6 +23,11 @@ program
   .command('init')
   .description('Initialize CLI')
   .action(init)
+
+program
+  .command('push-mr [taskLink]')
+  .description('Create new branch and related merge request')
+  .action(pushMergeRequest)
 
 program.parse(process.argv)
 

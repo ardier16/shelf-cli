@@ -10,6 +10,7 @@ import oldConfig from '../config.json'
 type InitConfig = {
   gitlabToken?: string,
   slackToken?: string,
+  jiraEmail?: string,
   jiraToken?: string,
 }
 
@@ -27,6 +28,11 @@ const INIT_QUESTIONS = [
     name: 'slackToken',
     message: 'Slack access token',
     suffix: '\nhttps://slack.com\n',
+  },
+  {
+    type: 'input',
+    name: 'jiraEmail',
+    message: 'Jira email',
   },
   {
     type: 'input',
