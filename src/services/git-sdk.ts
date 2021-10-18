@@ -24,7 +24,8 @@ export class GitSdk {
           reject(error)
         }
 
-        resolve(stdout || stderr)
+        const output = stdout || stderr || ''
+        resolve(output.trim())
       })
     })
   }

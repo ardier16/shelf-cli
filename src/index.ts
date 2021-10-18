@@ -23,7 +23,7 @@ program
   .action(init)
 
 program
-  .command('push-mr [taskLink]')
+  .command('push-mr [issueLink]')
   .description('Create new branch and related merge request')
   .action(pushMergeRequest)
 

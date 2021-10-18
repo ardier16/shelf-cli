@@ -44,7 +44,7 @@ const INIT_QUESTIONS = [
 
 export async function init () {
   let isOk = false
-  let config : InitConfig = {}
+  let config : InitConfig = oldConfig
 
   while (!isOk) {
     clear()
@@ -73,7 +73,11 @@ async function promptConfig (config: InitConfig) : Promise<InitConfig> {
       ...item,
       default: config[item.name],
     } as QuestionCollection)
-    Object.assign(result, answers)
+
+    if (answers[item.name] !== '') {
+      Object.assign(result, answers)
+    }
+
     clear()
   }
 
