@@ -20,13 +20,8 @@ export async function pushMergeRequest(issueLink: string) {
     console.log(`Finding issue ${chalk.yellow(issueName)}`)
     const issue = await jiraSdk.issues.getIssue({ issueIdOrKey: issueName })
 
-    console.log(`Creating branch ${chalk.yellow(issueName)}`)
-    await gitSdk.checkout('master')
-    await gitSdk.createBranch(issueName)
-    await gitSdk.pushOrigin(issueName)
-
     const remoteUrl = await gitSdk.getRemoteUrl()
-    const projectName = matchRegex(remoteUrl, /\/(.+)\.git/)
+    const projectName = matchRegex(remoteUrl, /\/([A-z-_]+)\.git/)
 
     console.log(`Finding Gitlab project ${chalk.yellow(projectName)}`)
     const projects = await gitlabSdk.Projects.search(projectName)
@@ -35,6 +30,11 @@ export async function pushMergeRequest(issueLink: string) {
       console.log(`${chalk.red('Project not found:')} ${chalk.cyan(projectName)}`)
       process.exit(0)
     }
+
+    console.log(`Creating branch ${chalk.yellow(issueName)}`)
+    await gitSdk.checkout('master')
+    await gitSdk.createBranch(issueName)
+    await gitSdk.pushOrigin(issueName)
 
     console.log(`Creating merge request for ${chalk.yellow(issueName)}`)
     const gitlabUser = await gitlabSdk.Users.current()
