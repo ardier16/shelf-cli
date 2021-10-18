@@ -9,7 +9,7 @@ export type ShelfConfig = Record<string, string> & {
   jiraToken: string,
 }
 
-export const defaultConfig = {
+const defaultConfig = {
   gitlabToken: '',
   slackToken: '',
   jiraEmail: '',

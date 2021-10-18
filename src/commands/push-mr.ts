@@ -37,11 +37,18 @@ export async function pushMergeRequest(issueLink: string) {
     }
 
     console.log(`Creating merge request for ${chalk.yellow(issueName)}`)
+    const gitlabUser = await gitlabSdk.Users.current()
     const mr = await gitlabSdk.MergeRequests.create(
       project.id,
       issueName,
       'master',
-      `WIP: [${issueName}] ${issue.fields.summary}`
+      `WIP: [${issueName}] ${issue.fields.summary}`,
+      {
+        assigneeId: gitlabUser.id,
+        description: issueLink,
+        squash: true,
+        removeSourceBranch: true,
+      }
     )
     console.log(`Merge request created for the issue ${chalk.yellow(issueName)}`)
     console.log(chalk.green(mr.web_url))
