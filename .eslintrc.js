@@ -36,5 +36,7 @@ module.exports = {
     'no-multi-spaces': 1,
     'no-trailing-spaces': 1,
     'space-in-parens': 1,
+    'quotes': [2, 'single', { 'avoidEscape': true }],
+    'no-multiple-empty-lines': [1, { 'max': 1 }],
   },
 }

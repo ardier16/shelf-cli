@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 
-import { gitSdk } from '../services/git-sdk'
-import { gitlabSdk } from '../services/gitlab-sdk'
-import { jiraSdk } from '../services/jira-sdk'
+import { gitClient } from '../services/git-client'
+import { gitlabClient } from '../services/gitlab-client'
+import { jiraClient } from '../services/jira-client'
 
 import { getGitlabProject } from '../utils/gitlab'
 import { matchRegex } from '../utils/regex'
@@ -19,17 +19,17 @@ export async function pushMergeRequest(issueLink: string) {
   const issueName = matchRegex(issueLink, JIRA_ISSUE_REGEX)
   try {
     console.log(`Finding issue ${chalk.yellow(issueName)}`)
-    const issue = await jiraSdk.issues.getIssue({ issueIdOrKey: issueName })
+    const issue = await jiraClient.issues.getIssue({ issueIdOrKey: issueName })
     const project = await getGitlabProject()
 
     console.log(`Creating branch ${chalk.yellow(issueName)}`)
-    await gitSdk.checkout('master')
-    await gitSdk.createBranch(issueName)
-    await gitSdk.pushOrigin(issueName)
+    await gitClient.checkout('master')
+    await gitClient.createBranch(issueName)
+    await gitClient.pushOrigin(issueName)
 
     console.log(`Creating merge request for ${chalk.yellow(issueName)}`)
-    const gitlabUser = await gitlabSdk.Users.current()
-    const mr = await gitlabSdk.MergeRequests.create(
+    const gitlabUser = await gitlabClient.Users.current()
+    const mr = await gitlabClient.MergeRequests.create(
       project.id,
       issueName,
       'master',

@@ -1,7 +1,6 @@
 import chalk from 'chalk'
-import { gitSdk } from '../services/git-sdk'
-
-import { jiraSdk } from '../services/jira-sdk'
+import { gitClient } from '../services/git-client'
+import { jiraClient } from '../services/jira-client'
 
 export async function logWork(timeSpent?: string) {
   if (timeSpent === undefined) {
@@ -10,12 +9,12 @@ export async function logWork(timeSpent?: string) {
   }
 
   try {
-    const issueId = await gitSdk.getCurrentBranch()
+    const issueId = await gitClient.getCurrentBranch()
     console.log(`Finding issue ${chalk.yellow(issueId)}`)
-    await jiraSdk.issues.getIssue({ issueIdOrKey: issueId })
+    await jiraClient.issues.getIssue({ issueIdOrKey: issueId })
 
     console.log(`Logging work for issue ${chalk.yellow(issueId)}`)
-    await jiraSdk.issueWorklogs.addWorklog({
+    await jiraClient.issueWorklogs.addWorklog({
       issueIdOrKey: issueId,
       timeSpent: timeSpent,
     })

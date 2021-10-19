@@ -14,7 +14,7 @@ program
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   .version(require('../package.json').version)
   .usage('<command> [options]')
-  .description("Shelf.Network CLI")
+  .description('Shelf.Network CLI')
 
 program
   .command('init')
@@ -32,7 +32,7 @@ program
   .action(logWork)
 
 program
-  .command('slack-mr [channel]')
+  .command('slack-mr [search]')
   .description('Send merge request message to Slack')
   .action(sendMRToSlack)
 

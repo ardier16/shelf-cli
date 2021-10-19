@@ -1,6 +1,6 @@
 import { exec } from 'child_process'
 
-export class GitSdk {
+export class GitClient {
   checkout (branch: string): Promise<string> {
     return this._execCommand(`git checkout ${branch}`)
   }
@@ -35,4 +35,4 @@ export class GitSdk {
   }
 }
 
-export const gitSdk = new GitSdk()
+export const gitClient = new GitClient()
