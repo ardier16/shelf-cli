@@ -1,8 +1,14 @@
 import { exec } from 'child_process'
 
 export class GitClient {
-  checkout (branch: string): Promise<string> {
-    return this._execCommand(`git checkout ${branch}`)
+  async checkout (branch: string): Promise<void> {
+    try {
+      await this._execCommand(`git checkout ${branch}`)
+    } catch (err) {
+      if (!String(err).startsWith('Already on')) {
+        throw err
+      }
+    }
   }
 
   createBranch (branch: string): Promise<string> {

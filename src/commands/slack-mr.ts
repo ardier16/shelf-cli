@@ -5,6 +5,8 @@ import inquirer from 'inquirer'
 import { gitClient } from '../services/git-client'
 import { gitlabClient } from '../services/gitlab-client'
 import { slackClient } from '../services/slack-client'
+import { spinner } from '../services/spinner'
+
 import { getGitlabProject } from '../utils/gitlab'
 
 type SlackConversation = {
@@ -31,7 +33,7 @@ export async function sendMRToSlack(search: string) {
     const branchName = await gitClient.getCurrentBranch()
     const project = await getGitlabProject()
 
-    console.log(`Finding open merge request for ${chalk.yellow(branchName)}`)
+    spinner.start(`Finding open merge request for ${chalk.yellow(branchName)}`)
     const mergeRequests = await gitlabClient.MergeRequests.all({
       projectId: project.id,
       sourceBranch: branchName,
@@ -40,18 +42,23 @@ export async function sendMRToSlack(search: string) {
     })
 
     if (mergeRequests.length === 0) {
+      spinner.fail()
       console.log(chalk.red(`No opened merge requests found for ${branchName}`))
       process.exit(0)
     }
 
+    spinner.succeed()
     const mergeRequest = mergeRequests[0]
     if (mergeRequest.title.startsWith('WIP:')) {
+      mergeRequest.title = mergeRequest.title.replace('WIP: ', '')
+
+      spinner.start('Removing merge request WIP badge')
       await gitlabClient.MergeRequests.edit(project.id, mergeRequest.iid, {
-        title: mergeRequest.title.replace('WIP: ', ''),
+        title: mergeRequest.title,
       })
-      console.log(chalk.cyan('Merge request WIP badge removed'))
     }
 
+    spinner.succeed().start('Sending message to Slack')
     const messageNotifier = conversation.isChannel ? '<!here> ' : ''
     const message = composeIssueMessage(
       `${messageNotifier}*${mergeRequest.title}*\n<${mergeRequest.web_url}>`
@@ -61,9 +68,11 @@ export async function sendMRToSlack(search: string) {
       channel: conversation.id,
       text: message,
     })
-    console.log(chalk.green('Message is successfully sent to Slack'))
 
+    spinner.succeed()
+    console.log(chalk.green('Message is successfully sent to Slack'))
   } catch (err) {
+    spinner.fail()
     console.error(chalk.red(err))
     process.exit(0)
   }
@@ -80,7 +89,7 @@ async function searchSlackConversations (search: string):
   Promise<SlackConversation[]> {
   const conversations : SlackConversation[] = []
 
-  console.log(`Searching Slack channels: ${chalk.yellow(search)}`)
+  spinner.start(`Searching Slack channels: ${chalk.yellow(search)}`)
   const { channels } = await slackClient.conversations.list({ limit: 100 })
   if (channels !== undefined) {
     const mapped = channels.map(item => ({
@@ -93,7 +102,7 @@ async function searchSlackConversations (search: string):
     conversations.push(...mapped)
   }
 
-  console.log(`Searching Slack members: ${chalk.yellow(search)}`)
+  spinner.succeed().start(`Searching Slack members: ${chalk.yellow(search)}`)
   const { members } = await slackClient.users.list({ limit: 100 })
   if (members !== undefined) {
     const mapped = members
@@ -108,6 +117,7 @@ async function searchSlackConversations (search: string):
     conversations.push(...mapped)
   }
 
+  spinner.succeed()
   return conversations.filter(item => {
     const normalizedSearch = search.toLowerCase()
     return item.name.toLowerCase().includes(normalizedSearch) ||
