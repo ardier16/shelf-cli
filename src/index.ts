@@ -8,6 +8,7 @@ import { init } from './commands/init'
 import { logWork } from './commands/log-work'
 import { pushMergeRequest } from './commands/push-mr'
 import { sendMRToSlack } from './commands/slack-mr'
+import { clone } from './commands/clone'
 
 program
   .name('shelf')
@@ -35,6 +36,11 @@ program
   .command('slack-mr [search]')
   .description('Send merge request message to Slack')
   .action(sendMRToSlack)
+
+program
+  .command('clone [search]')
+  .description('Search and clone GitLab project')
+  .action(clone)
 
 if (!process.argv.slice(2).length) {
   const figletBanner = figlet.textSync('Shelf CLI', {

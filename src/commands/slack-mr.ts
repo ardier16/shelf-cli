@@ -18,12 +18,12 @@ type SlackConversation = {
 }
 
 export async function sendMRToSlack(search: string) {
-  try {
-    if (!search) {
-      console.log(chalk.red(`Please provide ${chalk.cyan('[search]')} param`))
-      process.exit(0)
-    }
+  if (!search) {
+    console.log(chalk.red(`Please provide ${chalk.cyan('[search]')} param`))
+    process.exit(0)
+  }
 
+  try {
     const conversation = await chooseSlackConversation(search)
     if (conversation === undefined) {
       console.log(chalk.red(`No Slack conversations found for ${search}`))
@@ -130,7 +130,6 @@ async function chooseSlackConversation (search: string):
   Promise<SlackConversation | undefined> {
   const conversations = await searchSlackConversations(search)
   if (conversations.length === 0) return undefined
-  if (conversations.length === 1) return conversations[0]
 
   clear()
   const { conversationId } = await inquirer.prompt({

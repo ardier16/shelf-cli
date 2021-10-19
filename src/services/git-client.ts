@@ -27,6 +27,10 @@ export class GitClient {
     return this._execCommand('git remote get-url --push origin')
   }
 
+  clone (url: string): Promise<string> {
+    return this._execCommand(`git clone ${url}`)
+  }
+
   _execCommand (command: string): Promise<string> {
     return new Promise((resolve, reject) => {
       exec(command, (error, stdout, stderr) => {
