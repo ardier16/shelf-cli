@@ -10,4 +10,3 @@ export const jiraClient = new Version2Client({
     },
   },
 })
-
