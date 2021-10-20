@@ -11,7 +11,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "build": "tsc -p .",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "postinstall": "shelf --init-autocomplete"
   },
   "dependencies": {
     "@gitbeaker/node": "^34.2.0",

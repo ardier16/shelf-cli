@@ -11,6 +11,13 @@ import { sendMRToSlack } from './commands/slack-mr'
 import { clone } from './commands/clone'
 import { getTodayWorklog } from './commands/today-worklog'
 
+import { initAutocomplete } from './utils/autocomplete'
+
+if (process.argv.includes('--init-autocomplete')) {
+  initAutocomplete()
+  process.exit()
+}
+
 program
   .name('shelf')
   // eslint-disable-next-line @typescript-eslint/no-var-requires
