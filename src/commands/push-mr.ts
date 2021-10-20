@@ -21,9 +21,11 @@ export async function pushMergeRequest(issueLink: string) {
   try {
     spinner.start(`Finding issue ${chalk.yellow(issueName)}`)
     const issue = await jiraClient.issues.getIssue({ issueIdOrKey: issueName })
-    const project = await getGitlabProject()
+    spinner.succeed()
 
+    const project = await getGitlabProject()
     spinner.succeed().start(`Creating branch ${chalk.yellow(issueName)}`)
+
     await gitClient.checkout('master')
     await gitClient.createBranch(issueName)
     await gitClient.pushOrigin(issueName)

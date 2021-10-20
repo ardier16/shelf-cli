@@ -11,7 +11,11 @@ export async function getGitlabProject () {
   const projectName = matchRegex(remoteUrl, /\/([A-z-_]+)\.git/)
 
   spinner.start(`Finding Gitlab project ${chalk.yellow(projectName)}`)
-  const projects = await gitlabClient.Projects.search(projectName)
+  const projects = await gitlabClient.Projects.all({
+    membership: true,
+    perPage: 100,
+    search: projectName,
+  })
   const project = projects.find(item => item.ssh_url_to_repo === remoteUrl)
 
   if (project === undefined) {

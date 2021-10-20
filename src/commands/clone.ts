@@ -15,9 +15,13 @@ export async function clone (search?: string) {
 
   try {
     spinner.start(`Searching for projects: ${chalk.yellow(search)}`)
-    const projects = await gitlabClient.Projects.search(search)
+    const projects = await gitlabClient.Projects.all({
+      membership: true,
+      perPage: 100,
+      search,
+    })
     const shelfProjects = projects
-      .filter(item => item.namespace.full_path.startsWith('eAuction'))
+    // .filter(item => item.namespace.full_path.startsWith('eAuction'))
 
     spinner.succeed()
 
