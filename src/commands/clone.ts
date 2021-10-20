@@ -20,9 +20,6 @@ export async function clone (search?: string) {
       perPage: 100,
       search,
     })
-    const shelfProjects = projects
-    // .filter(item => item.namespace.full_path.startsWith('eAuction'))
-
     spinner.succeed()
 
     clear()
@@ -30,7 +27,7 @@ export async function clone (search?: string) {
       type: 'list',
       name: 'project',
       message: 'Choose GitLab Project',
-      choices: shelfProjects.map(item => ({
+      choices: projects.map(item => ({
         name: `${chalk.yellow(item.name)} (${item.path_with_namespace})`,
         value: item,
       })),
