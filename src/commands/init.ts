@@ -11,6 +11,7 @@ import { Version2Client } from 'jira.js'
 import { config as oldConfig, CONFIG_PATH, ShelfConfig } from '../config'
 import { SLACK_SCOPES } from '../services/slack-client'
 import { JIRA_HOST } from '../services/jira-client'
+import { spinner } from '../services/spinner'
 
 const INIT_QUESTIONS = [
   {
@@ -95,6 +96,7 @@ async function saveConfig (config: ShelfConfig) {
 }
 
 async function checkServices (config: ShelfConfig): Promise<boolean> {
+  spinner.start('Checking services')
   const [isGitlabValid, isJiraValid, isSlackValid] = await Promise.all([
     checkGitlab(config),
     checkJira(config),
@@ -102,7 +104,10 @@ async function checkServices (config: ShelfConfig): Promise<boolean> {
   ])
 
   const isValid = isGitlabValid && isJiraValid && isSlackValid
-  if (isValid) return true
+  if (isValid) {
+    spinner.succeed()
+    return true
+  }
 
   const { isContinue } = await inquirer.prompt({
     name: 'isContinue',
@@ -119,22 +124,23 @@ async function checkServices (config: ShelfConfig): Promise<boolean> {
 }
 
 async function checkGitlab (config: ShelfConfig): Promise<boolean> {
-  if (config.gitlabToken === '') return false
-
   try {
+    if (config.gitlabToken === '') throw new Error()
+
     const gitlabClient = new Gitlab({ token: config.gitlabToken })
     await gitlabClient.Users.current()
     return true
   } catch (err) {
+    spinner.fail()
     console.error(chalk.red('Invalid Gitlab token'))
     return false
   }
 }
 
 async function checkJira (config: ShelfConfig): Promise<boolean> {
-  if (config.jiraEmail === '' || config.jiraToken === '') return false
-
   try {
+    if (config.jiraEmail === '' || config.jiraToken === '') throw new Error()
+
     const jiraClient = new Version2Client({
       host: JIRA_HOST,
       authentication: {
@@ -148,15 +154,16 @@ async function checkJira (config: ShelfConfig): Promise<boolean> {
     await jiraClient.jiraSettings.getConfiguration()
     return true
   } catch (err) {
+    spinner.fail()
     console.error(chalk.red('Invalid Jira email:token pair'))
     return false
   }
 }
 
 async function checkSlack (config: ShelfConfig): Promise<boolean> {
-  if (config.slackToken === '') return false
-
   try {
+    if (config.slackToken === '') throw new Error()
+
     const slackClient = new WebClient(config.slackToken)
     const response = await slackClient.api.test()
 
@@ -164,10 +171,12 @@ async function checkSlack (config: ShelfConfig): Promise<boolean> {
       .every(scope => response.response_metadata?.scopes?.includes(scope))
     if (isSlackScopesValid) return true
 
+    spinner.fail()
     console.error(chalk.red('Invalid Slack scopes. Required:'))
     console.error(chalk.red(JSON.stringify(SLACK_SCOPES, null, 2)))
     return false
   } catch (err) {
+    spinner.fail()
     console.error(chalk.red('Invalid Slack token'))
     return false
   }

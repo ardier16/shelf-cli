@@ -5,14 +5,16 @@ import { sendMRToSlack } from './slack-mr'
 import { clone } from './clone'
 import { getTodayWorklog } from './today-worklog'
 
-type Command = {
+export type ShelfCommandAction = (...args: string[]) => void
+
+export type ShelfCommand = {
   name: string,
   description: string,
   arguments: string,
-  action: (...args: string[]) => void
+  action: ShelfCommandAction
 }
 
-export const COMMANDS : Command[] = [
+export const COMMANDS : ShelfCommand[] = [
   {
     name: 'init',
     description: 'Initialize CLI',
