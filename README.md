@@ -18,3 +18,13 @@ CLI contains commands for easier integration with Gitlab, Jira & Slack.
 | ✅   | `today-worklog`   | Add worklog for current task to Jira.
 | 🧑‍💻   | `merge-requests`  | Get user's open merge requests list.
 | 🧑‍💻   | `issues`          | Get user's issues.
+
+### Cool things
+
+- ✅ TyppeScript
+- ✅ Shelf.Network logo
+- 🧑‍💻 Terminal autocomplete
+  - 🧑‍💻 zsh
+  - 🧑‍💻 bash
+- 🧑‍💻 Extended help
+- 🧑‍💻 NPM package
