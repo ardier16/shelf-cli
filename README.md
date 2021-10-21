@@ -27,7 +27,7 @@ CLI contains commands for easier integration with Gitlab, Jira & Slack.
 - ✅ TypeScript
 - ✅ Shelf.Network logo
 - 🧑‍💻 Terminal autocomplete
-  - 🧑‍💻 zsh
+  - ✅ zsh
   - 🧑‍💻 bash
 - 🧑‍💻 Extended help
 - 🧑‍💻 NPM package
