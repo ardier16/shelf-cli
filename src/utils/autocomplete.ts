@@ -1,16 +1,26 @@
-import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
+import {
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'fs'
+
 import { homedir } from 'os'
 import { resolve } from 'path'
 
-const script = `
+import { COMMANDS } from '../commands'
+
+const COMMANDS_DEFINITION = COMMANDS
+  .map(command => `"${command.name}:${command.description}"`)
+  .join('\n')
+
+const COMPDEF_SCRIPT = `
 #compdef shelf
 
 local -a commands
 commands=(
-  'push-mr:Push merge request'
-  'slack-mr:Send merge request to Slack'
-  'log-work:Log work time'
-  'today-worklog:Get worklog for today'
+${COMMANDS_DEFINITION}
 )
 
 _describe 'command' commands
@@ -38,9 +48,9 @@ export function initAutocomplete () {
     }
 
     if (existsSync(SHELF_SCRIPT_PATH)) {
-      writeFileSync(SHELF_SCRIPT_PATH, script)
+      writeFileSync(SHELF_SCRIPT_PATH, COMPDEF_SCRIPT)
     } else {
-      appendFileSync(SHELF_SCRIPT_PATH, script)
+      appendFileSync(SHELF_SCRIPT_PATH, COMPDEF_SCRIPT)
     }
 
     let zshConfig = readFileSync(ZSHRC_PATH).toString()

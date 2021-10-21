@@ -1,6 +1,6 @@
 # 🚀 Shelf.Network CLI
 
-CLI tools designed esppecially for Shelf.Network members with Gitlab, Jira & Slack integration.
+CLI tools designed specially for Shelf.Network members. Gitlab, Jira & Slack integration provided.
 
 ## 🛠 Installation
 > TODO
