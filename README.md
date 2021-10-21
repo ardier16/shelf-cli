@@ -1,12 +1,15 @@
-# Shelf.Network CLI
+# 🚀 Shelf.Network CLI
 
-CLI tools designed esppecially for Shelf.Network users.
+CLI tools designed esppecially for Shelf.Network members with Gitlab, Jira & Slack integration.
 
-## Features
+## 🛠 Installation
+> TODO
+
+## 💻 Usage 
 
 CLI contains commands for easier integration with Gitlab, Jira & Slack.
 
-### Commands
+### ⚙️ Commands
 
 |      | Command           | Description  
 | ---- | ----------------- | ---------------
@@ -19,12 +22,34 @@ CLI contains commands for easier integration with Gitlab, Jira & Slack.
 | 🧑‍💻   | `merge-requests`  | Get user's open merge requests list.
 | 🧑‍💻   | `issues`          | Get user's issues.
 
-### Cool things
+### 😎 Cool things
 
-- ✅ TyppeScript
+- ✅ TypeScript
 - ✅ Shelf.Network logo
 - 🧑‍💻 Terminal autocomplete
   - 🧑‍💻 zsh
   - 🧑‍💻 bash
 - 🧑‍💻 Extended help
 - 🧑‍💻 NPM package
+
+## Running locally
+
+You should have Node.js 12+ and Yarn installed globally.
+
+### Install dependencies 
+
+```bash
+yarn
+```
+
+### Run in watch mode 
+
+```bash
+yarn start
+```
+
+### Build lib
+
+```bash
+yarn build
+```
