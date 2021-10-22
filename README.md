@@ -5,12 +5,12 @@ CLI tools designed specially for Shelf.Network members. Gitlab, Jira & Slack int
 ## 🛠 Installation
 
 ```bash
-yarn global add shelf-cli
+yarn global add @ardier16/shelf-cli
 ```
 or
 
 ```bash
-npm i -g shelf-cli
+npm i -g @ardier16/shelf-cli
 ```
 
 Then initialize CLI by running:

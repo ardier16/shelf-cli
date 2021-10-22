@@ -1,7 +1,6 @@
 {
   "name": "@ardier16/shelf-cli",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
   "main": "./lib/index.js",
   "bin": {
@@ -13,7 +12,9 @@
     "start": "nodemon src/index.ts",
     "build": "tsc -p .",
     "lint": "eslint ./src",
-    "postinstall": "shelf --init-autocomplete"
+    "postinstall": "shelf --init-autocomplete",
+    "prepublish": "yarn build",
+    "postversion": "npm publish"
   },
   "dependencies": {
     "@gitbeaker/node": "^34.2.0",
