@@ -1,6 +1,6 @@
 {
   "name": "@ardier16/shelf-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "./lib/index.js",
   "bin": {
@@ -8,7 +8,9 @@
   },
   "repository": "git@github.com:ardier16/shelf-cli.git",
   "author": "ardier16 <ardier16@gmail.com>",
-  "files": ["./lib/**/*"],
+  "files": [
+    "./lib/**/*"
+  ],
   "keywords": [
     "cli",
     "typescript",
