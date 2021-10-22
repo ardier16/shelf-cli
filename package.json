@@ -26,7 +26,6 @@
     "lint": "eslint ./src",
     "postinstall": "shelf --init-autocomplete",
     "version": "changelog-cli -o https://github.com:ardier16/shelf-cli release",
-    "postversion": "npm publish",
     "prepublish": "yarn build"
   },
   "dependencies": {
