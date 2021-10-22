@@ -40,11 +40,13 @@ CLI contains commands for easier integration with Gitlab, Jira & Slack.
 
 - ✅ TypeScript
 - ✅ Shelf.Network logo
+- ✅ [NPM package](https://www.npmjs.com/package/@ardier16/shelf-cli)
 - 🧑‍💻 Terminal autocomplete
   - ✅ zsh
   - 🧑‍💻 bash
 - 🧑‍💻 Extended help
-- 🧑‍💻 NPM package
+- 🧑‍💻 Github actions
+- 🧑‍💻 VS Code launch file
 
 ## Running locally
 
