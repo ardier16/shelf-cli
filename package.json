@@ -9,7 +9,7 @@
   "repository": "git@github.com:ardier16/shelf-cli.git",
   "author": "ardier16 <ardier16@gmail.com>",
   "files": [
-    "./lib/**/*"
+    "lib/**/*"
   ],
   "keywords": [
     "cli",
