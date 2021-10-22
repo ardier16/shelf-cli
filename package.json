@@ -1,6 +1,6 @@
 {
-  "name": "shelf-cli",
-  "version": "0.1.0",
+  "name": "@ardier16/shelf-cli",
+  "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "main": "./lib/index.js",
