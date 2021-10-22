@@ -8,13 +8,24 @@
   },
   "repository": "git@github.com:ardier16/shelf-cli.git",
   "author": "ardier16 <ardier16@gmail.com>",
+  "files": ["./lib"],
+  "keywords": [
+    "cli",
+    "typescript",
+    "commander",
+    "jira",
+    "gitlab",
+    "slack",
+    "api"
+  ],
   "scripts": {
     "start": "nodemon src/index.ts",
     "build": "tsc -p .",
     "lint": "eslint ./src",
     "postinstall": "shelf --init-autocomplete",
-    "prepublish": "yarn build",
-    "postversion": "npm publish"
+    "version": "changelog-cli -o https://github.com:ardier16/shelf-cli release",
+    "postversion": "npm publish",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "@gitbeaker/node": "^34.2.0",
@@ -29,6 +40,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@shelf.network/changelog-cli": "^1.0.4",
     "@types/clear": "^0.1.2",
     "@types/figlet": "^1.5.4",
     "@types/inquirer": "^8.1.3",
